@@ -20,26 +20,44 @@
 <div class="container-fluid">
 <div class="panel panel-success">
   <div class="panel-heading">
-    <h3 class="panel-title glyphicon glyphicon-home"><a target="_blank" href="https://wx5.github.io/" title="web51|goc">首页</a>&nbsp;&gt;&nbsp;Laravel填坑记</h3>
+    <h3 class="panel-title glyphicon glyphicon-home"><a href="https://wx5.github.io/" title="web51|goc">&nbsp;首页</a>&nbsp;&gt;&nbsp;Laravel填坑记</h3>
   </div>
   <div class="panel-body">
     <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-info">
           <div class="panel-heading">
-            <h3 class="panel-title">查询构建器的orWhere方法搜索到了多余的数据？</h3>
+            <h3 class="panel-title">orWhere造句的正确格式</h3>
           </div>
           <div class="panel-body">
             <p>举个例子：
               <pre>
-                      $res=Cuscon::where('cid',$user->id);
-                      if($tag !== '') {
-                          $res=$res->where('name','like','%'.$tag.'%')
-                          ->orWhere('company','like','%'.$tag.'%')
-                          ->orWhere('email','like','%'.$tag.'%');
-                      }
-                      $res=$res->orderBy('id','desc')
-                               ->paginate($pagesize);
+    $res=Cuscon::where('cid',$user->id);
+    if($tag !== '') {
+        $res=$res->where('name','like','%'.$tag.'%')
+        ->orWhere('company','like','%'.$tag.'%')
+        ->orWhere('email','like','%'.$tag.'%');
+    }
+    $res=$res->orderBy('id','desc')
+             ->paginate($pagesize);
+              </pre>
+            </p>
+               <p>这么写是有问题的。修改成如下形式就好：
+              <pre>
+        $res=Cuscon::where('cid',$user->id);
+        if($tag !== '') {
+            $res=$res->where('name','like','%'.$tag.'%')
+            ->orWhere(function($q) use ($tag,$user){
+                $q->where('company','like','%'.$tag.'%')
+                    ->where('cid',$user->id);
+            })
+            ->orWhere(function($q) use ($tag,$user){
+                $q->where('email','like','%'.$tag.'%')
+                  ->where('cid',$user->id);
+            });
+        }
+        $res=$res->orderBy('id','desc')
+                 ->paginate($pagesize);
               </pre>
             </p>
           </div>
