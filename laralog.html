@@ -20,7 +20,7 @@
 <div class="container-fluid">
 <div class="panel panel-success">
   <div class="panel-heading">
-    <h3 class="panel-title glyphicon glyphicon-home"><a href="https://wx5.github.io/" title="web51|goc">&nbsp;首页</a>&nbsp;&gt;&nbsp;Laravel填坑记</h3>
+    <h3 class="panel-title glyphicon glyphicon-home">&nbsp;<a href="https://wx5.github.io/" title="web51|goc">首页</a>&nbsp;&gt;&nbsp;Laravel填坑记</h3>
   </div>
   <div class="panel-body">
     <div class="row">
@@ -55,7 +55,35 @@ if($tag !== '') {
 </pre>
             
           </div>
-        </div>
+        </div><!--end panel-info-->
+
+              <div class="panel panel-warning">
+          <div class="panel-heading">
+            <h3 class="panel-title">防止join和leftJoin“买一送一”</h3>
+          </div>
+          <div class="panel-body">
+            <p>举个例子：</p>
+<pre>
+$pros=Ckpro::join('prepare_kpr as K','K.id','=', 'orders_cks_products.kprid')
+  ->join('prepare_cp as pc','orders_cks_products.precpid','=','pc.id')
+  ->join('info_hscodes as ih','ih.hscode','=','pc.hscode')
+  ->select('orders_cks_products.*','K.company as kpr','ih.hscode as hscode','ih.tax_return','ih.tax_added')
+  ->where('orders_cks_products.orderid', $res->id)
+  ->get();
+</pre>
+<p>原谅我水平比较菜，只会写这么笨重的句子。如果是买彩票，那我赚大了。因为在库中惟一存在的每条记录都会在结果集中出现两次！</p>
+<p>因为这毕竟不是买彩票，所以我用了 distinct 方法来去重。</p>
+<pre>
+$pros=Ckpro::join('prepare_kpr as K','K.id','=', 'orders_cks_products.kprid')
+  ->join('prepare_cp as pc','orders_cks_products.precpid','=','pc.id')
+  ->join('info_hscodes as ih','ih.hscode','=','pc.hscode')
+  ->select('orders_cks_products.*','K.company as kpr','ih.hscode as hscode','ih.tax_return','ih.tax_added')
+  ->where('orders_cks_products.orderid', $res->id)
+  ->distinct('sort')
+  ->get();
+</pre>
+          </div>
+        </div><!--end panel-info-->
     </div>
   </div>
 </div>
