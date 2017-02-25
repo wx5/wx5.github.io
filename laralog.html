@@ -32,32 +32,32 @@
           <div class="panel-body">
             <p>举个例子：
               <pre>
-    $res=Cuscon::where('cid',$user->id);
-    if($tag !== '') {
-        $res=$res->where('name','like','%'.$tag.'%')
-        ->orWhere('company','like','%'.$tag.'%')
-        ->orWhere('email','like','%'.$tag.'%');
-    }
-    $res=$res->orderBy('id','desc')
-             ->paginate($pagesize);
+$res=Cuscon::where('cid',$user->id);
+if($tag !== '') {
+    $res=$res->where('name','like','%'.$tag.'%')
+    ->orWhere('company','like','%'.$tag.'%')
+    ->orWhere('email','like','%'.$tag.'%');
+}
+$res=$res->orderBy('id','desc')
+         ->paginate($pagesize);
               </pre>
             </p>
                <p>这么写是有问题的。修改成如下形式就好：
               <pre>
-        $res=Cuscon::where('cid',$user->id);
-        if($tag !== '') {
-            $res=$res->where('name','like','%'.$tag.'%')
-            ->orWhere(function($q) use ($tag,$user){
-                $q->where('company','like','%'.$tag.'%')
-                    ->where('cid',$user->id);
-            })
-            ->orWhere(function($q) use ($tag,$user){
-                $q->where('email','like','%'.$tag.'%')
-                  ->where('cid',$user->id);
-            });
-        }
-        $res=$res->orderBy('id','desc')
-                 ->paginate($pagesize);
+$res=Cuscon::where('cid',$user->id);
+if($tag !== '') {
+    $res=$res->where('name','like','%'.$tag.'%')
+    ->orWhere(function($q) use ($tag,$user){
+        $q->where('company','like','%'.$tag.'%')
+            ->where('cid',$user->id);
+    })
+    ->orWhere(function($q) use ($tag,$user){
+        $q->where('email','like','%'.$tag.'%')
+          ->where('cid',$user->id);
+    });
+}
+$res=$res->orderBy('id','desc')
+         ->paginate($pagesize);
               </pre>
             </p>
           </div>
