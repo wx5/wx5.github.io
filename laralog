@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<title class="glyphicon glyphicon-grain text-success">Laravel填坑记--&dot;网事2017</title>
+<link rel="Bookmark" href="favicon.png"> 
+<link rel="Shortcut Icon" href="favicon.png"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<style>
+</style>
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="page-header bg-success" style="margin-top:0px;padding-top:1px;">
+  <h1>&nbsp;<span class="glyphicon glyphicon-grain text-success"></span>&nbsp;网事2017 <small>(laravel,php)(html5,js)(主力测试、造轮子、传播)</small></h1>
+</div>
+<div class="container-fluid">
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title glyphicon glyphicon-home"><a target="_blank" href="https://wx5.github.io/" title="web51|goc">首页</a>&nbsp;&gt;&nbsp;Laravel填坑记</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">查询构建器的orWhere方法搜索到了多余的数据？</h3>
+          </div>
+          <div class="panel-body">
+            <p>举个例子：
+              <pre>
+                      $res=Cuscon::where('cid',$user->id);
+                      if($tag !== '') {
+                          $res=$res->where('name','like','%'.$tag.'%')
+                          ->orWhere('company','like','%'.$tag.'%')
+                          ->orWhere('email','like','%'.$tag.'%');
+                      }
+                      $res=$res->orderBy('id','desc')
+                               ->paginate($pagesize);
+              </pre>
+            </p>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+  <script>
+  $('[role=popover]').popover();
+  </script>
+</body>
+</html>
