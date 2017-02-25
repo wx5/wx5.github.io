@@ -30,32 +30,30 @@
             <h3 class="panel-title">orWhere造句的正确格式</h3>
           </div>
           <div class="panel-body">
-            <p>举个例子：
-              <pre>
+            <p>举个例子：</p>
+<pre>
 $res=Cuscon::where('cid',$user->id);
 if($tag !== '') {
     $res=$res->where('name','like','%'.$tag.'%')
     ->orWhere('company','like','%'.$tag.'%')
     ->orWhere('email','like','%'.$tag.'%');
 }
-              </pre>
-            </p>
-               <p>这么写是有问题的。修改成如下形式就好：
-              <pre>
+</pre>
+
+               <p>想要只是搜索当前用户的信息，而不越权触碰其它用户的，你真正需要的句子可能是下面那样：</p>
+<pre>
 $res=Cuscon::where('cid',$user->id);
 if($tag !== '') {
     $res=$res->where('name','like','%'.$tag.'%')
-    ->orWhere(function($q) use ($tag,$user){
-        $q->where('company','like','%'.$tag.'%')
-            ->where('cid',$user->id);
+    ->orWhere( function ($q) use ($tag, $user) {
+        $q->where('cid',$user->id)->where('company','like','%'.$tag.'%');
     })
-    ->orWhere(function($q) use ($tag,$user){
-        $q->where('email','like','%'.$tag.'%')
-          ->where('cid',$user->id);
+    ->orWhere( function ($q) use ($tag, $user) {
+        $q->where('cid',$user->id)->where('email','like','%'.$tag.'%');
     });
 }
-              </pre>
-            </p>
+</pre>
+            
           </div>
         </div>
     </div>
