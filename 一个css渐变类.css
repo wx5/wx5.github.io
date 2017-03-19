@@ -1,0 +1,7 @@
+.bg-default { 
+  background: -webkit-linear-gradient(#c5d0d8, #b3c1cc, #d1dae1); 
+  background: -o-linear-gradient(#c5d0d8,      #b3c1cc, #d1dae1); 
+  background: -moz-linear-gradient(#c5d0d8,    #b3c1cc, #d1dae1); 
+  background: linear-gradient(#c5d0d8,         #b3c1cc, #d1dae1);
+  box-shadow: 1px 0px 5px #999999;
+}
